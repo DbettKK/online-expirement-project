@@ -202,7 +202,7 @@ class manual_score(APIView):
 # 作业情况分析 ×未测试
 class homework_analysis(APIView):
     def get(self, request):
-        token=request.META.get('token')
+        token=request.META.get('HTTP_TOKEN')
         homework_id=request.GET.get('homework_id')
 
         # 查token确认用户

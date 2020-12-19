@@ -63,7 +63,7 @@ class student_get_homework_detail(APIView):
 # 学生提交作业+自动批改作业 ×未修改
 class handin_homework(APIView):
     def post(self, request):
-        token = request.META.get('token')
+        token = request.META.get('HTTP_TOKEN')
         homework_id = request.POST.get('homework_id')
         quesno = request.POST.get('quesno')
         stuans= request.POST.get('stuans')
@@ -161,7 +161,7 @@ class handin_homework(APIView):
 class student_get_grade(APIView):
     # 若并未所有题都已得到分数，则不显示
     def get(self, request):
-        token=request.META.get('token')
+        token=request.META.get('HTTP_TOKEN')
         submission_id=request.GET.get('sub_id')
 
         stu_id = s_chk_token(token)
