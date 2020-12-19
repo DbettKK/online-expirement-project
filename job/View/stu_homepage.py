@@ -3,7 +3,7 @@ from job.serializers import CouSer, StudentSer
 from rest_framework.views import APIView, Response
 from job.views import s_chk_token
 
-# 学生端主页-课程列表
+# 学生端主页-课程列表 √
 class student_course(APIView):
     def get(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -20,7 +20,7 @@ class student_course(APIView):
             'data': CouSer(course_list, many=True).data
         }, status=200)
 
-
+# √
 class student_modify_password(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -40,3 +40,6 @@ class student_modify_password(APIView):
             'code': 200,
             'data': StudentSer(update_pwd).data
         }, status=200)
+
+
+# class student_get_notice(APIView):

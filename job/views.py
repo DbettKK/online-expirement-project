@@ -101,16 +101,19 @@ from .View.login import login
 
 
 from .View.tea_homepage import teacher_course, teacher_modify_password
-from .View.tea_homework import teacher_get_homework_list, publish_homework, teacher_get_homework_detail, get_completed_list, get_completed_homework, delete_homework
+from .View.tea_homework import teacher_get_homework_list, publish_homework, teacher_get_homework_detail, get_completed_list, get_completed_homework, delete_homework, manual_score
 from .View.tea_sign import teacher_get_sign_list, publish_sign, delete_sign
 
 
 from .View.stu_homepage import student_course, student_modify_password
 from .View.stu_homework import student_get_homework, student_get_homework_detail
+from .View.stu_sign import student_get_sign, sign
 
 
 from .View.manager_homepage import manager_modify_password
 from .View.manager_teacher import get_teacher_list, add_teacher, modify_teacher, delete_teacher
 from .View.manager_student import get_student_list, add_student, modify_student, delete_student
+from .View.manager_course import get_course_list, add_course, modify_course, delete_course
+from .View.manager_notice import get_notice_list, add_notice, delete_notice
 
 

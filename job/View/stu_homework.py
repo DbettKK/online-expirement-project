@@ -6,7 +6,7 @@ from django.db.models import Sum
 import django.utils.timezone as timezone
 import json
 
-# 学生get作业列表
+# 学生get作业列表 ×未修改
 class student_get_homework(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')
@@ -60,7 +60,7 @@ class student_get_homework_detail(APIView):
         }, status=200)
 
 
-# 学生提交作业+自动批改作业  序列化可能需要修改，看看是哪个表包含哪个表&过期：如果过期，在提交的时候给信息不能提交。但依旧可以查看作业页面，只是无法提交
+# 学生提交作业+自动批改作业 ×未修改
 class handin_homework(APIView):
     def post(self, request):
         token = request.META.get('token')
@@ -157,7 +157,7 @@ class handin_homework(APIView):
                 }, status=400)
 
 
-# 学生get分数
+# 学生get分数 ×未修改
 class student_get_grade(APIView):
     # 若并未所有题都已得到分数，则不显示
     def get(self, request):

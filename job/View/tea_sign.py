@@ -86,7 +86,7 @@ class delete_sign(APIView):
         }, status=200)
 
 
-# 学生签到详情
+# 学生签到详情 ×未测试
 class sign_detail(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')

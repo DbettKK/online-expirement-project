@@ -4,6 +4,7 @@ from rest_framework.views import APIView, Response
 from job.views import m_chk_token
 
 
+# 请求所有课程列表 √
 class get_course_list(APIView):
     def get(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -20,7 +21,7 @@ class get_course_list(APIView):
             'data': CouSer(course_list, many=True).data
         }, status=200)
 
-
+# 添加课程 √
 class add_course(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -51,7 +52,7 @@ class add_course(APIView):
                 'data': CouSer(create_course).data
             }, status=200)
 
-
+# 修改课程 √
 class modify_course(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -78,8 +79,8 @@ class modify_course(APIView):
             'data': CouSer(all_course).data
         }, status=200)
 
-
-class delete_coruse(APIView):
+# 删除课程 √
+class delete_course(APIView):
     def get(self, request):
         token = request.META.get('HTTP_TOKEN')
         course_id = request.GET.get('course_id')

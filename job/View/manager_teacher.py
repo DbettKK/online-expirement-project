@@ -3,7 +3,7 @@ from job.serializers import TeacherSer
 from rest_framework.views import APIView, Response
 from job.views import m_chk_token
 
-
+# √
 class get_teacher_list(APIView):
     def get(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -20,7 +20,7 @@ class get_teacher_list(APIView):
             'data': TeacherSer(teacher_list, many=True).data
         }, status=200)
 
-
+# √
 class add_teacher(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -52,7 +52,7 @@ class add_teacher(APIView):
                 'data': TeacherSer(create_teacher,many=True).data
             }, status=200)
 
-
+# √
 class modify_teacher(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -79,7 +79,7 @@ class modify_teacher(APIView):
             'data': TeacherSer(all_teacher,many=True).data
         }, status=200)
 
-
+# √
 class delete_teacher(APIView):
     def get(self, request):
         token = request.META.get('HTTP_TOKEN')

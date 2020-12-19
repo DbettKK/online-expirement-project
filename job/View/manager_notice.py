@@ -3,7 +3,7 @@ from job.serializers import NoticeSer
 from rest_framework.views import APIView, Response
 from job.views import m_chk_token
 
-
+# 请求公告列表 √
 class get_notice_list(APIView):
     def get(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -20,7 +20,10 @@ class get_notice_list(APIView):
             'data': NoticeSer(notice_list, many=True).data
         }, status=200)
 
+# 请求公告详情还未写
+# class get_notice_detial(APIView):
 
+# 添加公告 √
 class add_notice(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -46,32 +49,7 @@ class add_notice(APIView):
             'data': NoticeSer(all_notice).data
         }, status=200)
 
-
-class modify_notice(APIView):
-    def post(self, request):
-        token = request.META.get('HTTP_TOKEN')
-        notice_id = request.GET.get('notice_id')
-        new_title = request.POST.get('new_title')
-        new_content = request.POST.get('new_content')
-
-        ma_id = m_chk_token(token)
-        if isinstance(ma_id, Response):
-            return ma_id
-
-        update_notice = notice.objects.get(pk=notice_id)
-        update_notice.Title = new_title
-        update_notice.Content = new_content
-        update_notice.save()
-
-        all_notice = notice.objects.all()
-
-        return Response({
-            'info': 'success',
-            'code': 200,
-            'data': NoticeSer(all_notice).data
-        }, status=200)
-
-
+# 删除公告 √
 class delete_notice(APIView):
     def get(self, request):
         token = request.META.get('HTTP_TOKEN')

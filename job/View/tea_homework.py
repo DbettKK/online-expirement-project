@@ -29,70 +29,60 @@ class teacher_get_homework_list(APIView):
         }, status=200)
 
 
-# 教师发布作业
+# 教师发布作业 √
 class publish_homework(APIView):
     def post(self, request):
-        token = request.META.get('token')
+        token = request.META.get('HTTP_TOKEN')
         course_id = request.GET.get('course_id')
-
         title = request.POST.get('title')
-
-        quesno = request.POST.get('quesno')
-        type = request.POST.get('type')
-        content = request.POST.get('content')
-        correctans = request.POST.get('correctans')
-        score = request.POST.get('score')
-        #Python strip() 方法用于移除字符串头尾指定的字符（默认为空格或换行符）或字符序列。
-        quesnums = request.POST.get('quesnums').strip() #获取题目数量
-
         pubtime = request.POST.get('pubtime')
         endtime = request.POST.get('endtime')
 
-        # 1. 查token表 判断是哪个用户在操作
-        # 2. 根据查表结果 判断是否合法
+        json_list = request.POST.get('json_list')
+        '''
+        示例：
+        [
+            {"quesno":"1","type":"0","content":"这是第一道选择题的题目","correctans":"正确答案A","score":"该题分值"},
+            {"quesno":"2","type":"0","content":"这是第二道填空题的题目","correctans":"正确答案","score":"该题分值"},
+            ......
+        ]
+        '''
+
         tea_id = t_chk_token(token)
         if isinstance(tea_id, Response):
             return tea_id
 
-        # 查是哪门课的
         c = chk_course_id(course_id)
         if isinstance(c, Response):
             return c
 
         # 向作业表中添加记录
         create_homework = homework.objects.create(
-            # HomNo=homno,
             Title=title,
             PubTime=pubtime,
-            Endtime=endtime,
-            # 这里可能要改
-            CourseNo=c #与课程表关联起来
+            EndTime=endtime,
+            Course=c
         )
 
+        list = json.loads(json_list)
+        print(list)
         # 向question中批量添加记录
-        if quesnums.isdigit() and int(quesnums) > 0:  #Python isdigit() 方法检测字符串是否只由数字组成。
-            for i in range(int(quesnums)):
-                create_question = question.objects.create(
-                    QuesNo=quesno,
-                    Type=type,
-                    Content=content,
-                    CorrectAnswer=correctans,
-                    Score=score,
-                    # 将题目和作业关联起来
-                    HomeworkID=create_homework,
-                )
+        for i in list:
+            create_question = question.objects.create(
+                QuesNo=i['quesno'],
+                Type=i['type'],
+                Content=i['content'],
+                CorrectAnswer=i['correctans'],
+                Score=i['score'],
+                Homework=create_homework
+            )
 
-            return Response({
-                'info': 'success',
-                'code': 200,
-                'data': HomeworkSer(create_homework, create_question).data
-            }, status=200)
-
-        else:
-            return Response({
-                'info': '不完整',
-                'code': 400
-            }, status=400)
+        return Response({
+            'info': 'success',
+            'code': 200,
+            #这里只能返回question的最后一条记录
+            'data': QuestionSer(create_question).data
+        }, status=200)
 
 
 # 教师get作业详细内容 √
@@ -170,14 +160,21 @@ class get_completed_homework(APIView):
         }, status=200)
 
 
-# 教师手动批改主观题
+# 教师手动批改主观题 √
 class manual_score(APIView):
     def post(self, request):
-        token = request.META.get('token')
+        token = request.META.get('HTTP_TOKEN')
         submission_id = request.GET.get('submission_id')
-        nums = request.POST.get('nums')
-        quesno = request.POST.get('quesno')  # 要将分数和题号匹配起来，怎么做到
-        grade = request.POST.get('grade')
+
+        json_list = request.POST.get('json_list')
+        '''
+        示例：
+        [
+            {"quesno":"1","grade":"24"},
+            {"quesno":"2","type":"12"},
+            ......
+        ]
+        '''
 
         tea_id = t_chk_token(token)
         if isinstance(tea_id, Response):
@@ -187,22 +184,22 @@ class manual_score(APIView):
         if isinstance(s, Response):
             return s
 
-        if nums.isdigit() and int(nums) > 0:
-            for i in range(int(nums)):
-                # 将小题分数循环存入answer表
-                update_grade = answer.objects.filter(SubmissionID=submission_id, QuesNo=i)
-                update_grade.Grade = grade
-                update_grade.save()
+        list = json.loads(json_list)
+        print(list)
+        # 向question中批量添加记录
+        for i in list:
+            update_grade = answer.objects.get(Submission=submission_id, QuesNo=i['quesno'])
+            update_grade.Grade = i['grade']
+            update_grade.save()
 
         return Response({
             'info': 'success',
             'code': 200,
-            # 括号中的是不是要改一下
             'data': StuAnswerSer(update_grade).data
         }, status=200)
 
 
-# 作业情况分析
+# 作业情况分析 ×未测试
 class homework_analysis(APIView):
     def get(self, request):
         token=request.META.get('token')
@@ -250,15 +247,6 @@ class homework_analysis(APIView):
             'code': 200,
             'data': AnalysisSer(create_analysis).data
         }, status=200)
-
-        # nums=all_question.count()
-        # ##### 每道题的正确率
-        # # 正确率=满分数/总提交数
-        # # 满分数=答案表中所有Grade==Score的记录
-        # for i in range(int(nums)):
-        #     question_score=question.objects.get(QuesNo=i).Score
-        #     full_counts=answer.objects.filter(Grade=question_score).count()
-        #     accuracy=full_counts/submission_counts
 
 
 # 删除作业 √
