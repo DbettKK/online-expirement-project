@@ -51,7 +51,8 @@ class student(models.Model):
     Course = models.ManyToManyField(
         'course',
         verbose_name='课程编号',
-        related_name='course_students'
+        related_name='course_students',
+        null=True
     )
 
     need_to_sign = models.ManyToManyField(
@@ -60,6 +61,7 @@ class student(models.Model):
         verbose_name='需要完成的签到',
         through = 'StudentSign',
         through_fields = ('student', 'sign'),
+        null=True
     )
 
     def __str__(self):
@@ -69,6 +71,37 @@ class student(models.Model):
         ordering = ['-StudentNo']
         verbose_name = '学生'
         verbose_name_plural = verbose_name
+
+
+class sign(models.Model):
+    Title = models.CharField(verbose_name='签到标题', max_length=50)
+    PubTime = models.DateTimeField(verbose_name='发布时间')
+    EndTime = models.DateTimeField(verbose_name='截止时间')
+
+    Course = models.ForeignKey(
+        'course',
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.Title
+
+    class Meta:
+        ordering = ['-PubTime']
+        verbose_name = '签到'
+        verbose_name_plural = verbose_name
+
+
+class StudentSign(models.Model):
+    student = models.ForeignKey('student', on_delete=models.CASCADE, verbose_name='签到学生')
+    sign = models.ForeignKey('sign', on_delete=models.CASCADE, verbose_name='签到')
+    SignTime = models.DateTimeField(auto_now_add=True, verbose_name='签到时间')
+
+    class Meta:
+        ordering = ['-SignTime']
+
+    def __str__(self):
+        return self.student.StudentName
 
 
 class course(models.Model):
@@ -86,6 +119,7 @@ class course(models.Model):
         'student',
         verbose_name='学生学号',
         related_name='student_courses',
+        null=True
     )
 
     def __str__(self):
@@ -102,7 +136,7 @@ class homework(models.Model):
     PubTime=models.DateTimeField(verbose_name='发布时间')
     EndTime=models.DateTimeField(verbose_name='结束时间')
 
-    isExpired=models.BooleanField(verbose_name='是否过期', default=False)
+    isExpired=models.BooleanField(verbose_name='是否过期', default=False, null=True)
 
     Course=models.ForeignKey(
         'course',
@@ -143,11 +177,11 @@ class question(models.Model):
 
 
 class submission(models.Model):
-    StudentNo=models.CharField(verbose_name='学生学号', max_length=50)
+    StudentNo=models.CharField(verbose_name='学生学号', max_length=50, null=True)
     SubTime=models.DateTimeField(verbose_name='提交时间', max_length=50)
     TotalGrade=models.FloatField(verbose_name='总成绩', default='0', null=True)
 
-    isSubmitted=models.BooleanField(verbose_name='是否提交', default=False)
+    isSubmitted=models.BooleanField(verbose_name='是否提交', default=False, null=True)
 
     Homework=models.ForeignKey(
         'homework',
@@ -167,7 +201,7 @@ class submission(models.Model):
 class answer(models.Model):
     QuesNo=models.CharField(verbose_name='题目编号', max_length=50)
     StudentAnswer=models.CharField(verbose_name='学生答案', max_length=50, blank=True, null=True)
-    Grade=models.FloatField(verbose_name='该题得分', default='0')
+    Grade=models.FloatField(verbose_name='该题得分', default='0', null=True)
 
     Submission=models.ForeignKey(
         'submission',
@@ -186,55 +220,18 @@ class answer(models.Model):
 
 
 class analysis(models.Model):
-    AllCounts=models.IntegerField(verbose_name='需做作业人数')
-    SubCounts=models.IntegerField(verbose_name='已提交数量')
-    Average=models.FloatField(verbose_name='平均分')
-    Full=models.FloatField(verbose_name='满分')
-    Max=models.FloatField(verbose_name='最高分')
-    Min=models.FloatField(verbose_name='最低分')
+    AllCounts=models.IntegerField(verbose_name='需做作业人数', null=True)
+    SubCounts=models.IntegerField(verbose_name='已提交数量', null=True)
+    Average=models.FloatField(verbose_name='平均分', null=True)
+    Full=models.FloatField(verbose_name='满分', null=True)
+    Max=models.FloatField(verbose_name='最高分', null=True)
+    Min=models.FloatField(verbose_name='最低分', null=True)
 
     Homework=models.ForeignKey(
         'homework',
         verbose_name='作业编号',
         on_delete=models.CASCADE,
     )
-
-
-class sign(models.Model):
-    Title = models.CharField(verbose_name='签到标题', max_length=50)
-    PubTime = models.DateTimeField(verbose_name='发布时间')
-    EndTime = models.DateTimeField(verbose_name='截止时间')
-
-    Course = models.ForeignKey(
-        'course',
-        on_delete=models.CASCADE,
-    )
-
-    # sign_by = models.ManyToManyField(
-    #     'student',
-    #     related_name='student_signs',
-    #     verbose_name='需要进行此次签到的学生'
-    # )
-
-    def __str__(self):
-        return self.Title
-
-    class Meta:
-        ordering = ['-PubTime']
-        verbose_name = '签到'
-        verbose_name_plural = verbose_name
-
-
-class StudentSign(models.Model):
-    student = models.ForeignKey('student', on_delete=models.CASCADE, verbose_name='签到学生')
-    sign = models.ForeignKey('sign', on_delete=models.CASCADE, verbose_name='签到')
-    SignTime = models.DateTimeField(auto_now_add=True, verbose_name='签到时间')
-
-    class Meta:
-        ordering = ['-SignTime']
-
-    def __str__(self):
-        return self.student.StudentName
 
 
 class notice(models.Model):

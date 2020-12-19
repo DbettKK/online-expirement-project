@@ -32,19 +32,24 @@ class add_course(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        create_course = course.objects.create(
-            CourseNo=course_no,
-            CourseName=course_name,
-            TeacherNo=teacher_no
-        )
+        if len(course.objects.filter(CourseNo=teacher_no)) > 0:
+            return Response({
+                'info': '该记录已存在',
+                'code': 403,
+            }, status=403)
 
-        all_course = course.objects.all()
+        else:
+            create_course = course.objects.create(
+                CourseNo=course_no,
+                CourseName=course_name,
+                TeacherNo=teacher_no
+            )
 
-        return Response({
-            'info': 'success',
-            'code': 200,
-            'data': CouSer(all_course).data
-        }, status=200)
+            return Response({
+                'info': 'success',
+                'code': 200,
+                'data': CouSer(create_course).data
+            }, status=200)
 
 
 class modify_course(APIView):

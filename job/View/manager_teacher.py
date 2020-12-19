@@ -32,19 +32,25 @@ class add_teacher(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        create_teacher = teacher.objects.create(
-            TeacherNo=teacher_no,
-            TeacherName=teacher_name,
-            TeacherGender=teacher_gender
-        )
+        if len(teacher.objects.filter(TeacherNo=teacher_no)) > 0:
+            return Response({
+                'info': '该记录已存在',
+                'code': 403,
+            }, status=403)
 
-        all_teacher = teacher.objects.all()
+        else:
+            create_teacher = teacher.objects.create(
+                TeacherNo=teacher_no,
+                TeacherName=teacher_name,
+                TeacherGender=teacher_gender,
+                TPassword='123'
+            )
 
-        return Response({
-            'info': 'success',
-            'code': 200,
-            'data': TeacherSer(all_teacher,many=True).data
-        }, status=200)
+            return Response({
+                'info': 'success',
+                'code': 200,
+                'data': TeacherSer(create_teacher,many=True).data
+            }, status=200)
 
 
 class modify_teacher(APIView):

@@ -27,26 +27,30 @@ class add_student(APIView):
         student_no = request.POST.get('student_no')
         student_name = request.POST.get('student_name')
         student_gender = request.POST.get('student_gender')
-        course_no = request.POST.get('course_no')
 
         ma_id = m_chk_token(token)
         if isinstance(ma_id, Response):
             return ma_id
 
-        create_student = student.objects.create(
-            StudentNo=student_no,
-            StudentName=student_name,
-            StudentGender=student_gender,
-            CourseNo=course_no
-        )
+        if len(student.objects.filter(StudentNo=student_no)) > 0:
+            return Response({
+                'info': '该记录已存在',
+                'code': 403,
+            }, status=403)
 
-        all_student = student.objects.all()
+        else:
+            create_student = student.objects.create(
+                StudentNo=student_no,
+                StudentName=student_name,
+                StudentGender=student_gender,
+                SPassword='123'
+            )
 
-        return Response({
-            'info': 'success',
-            'code': 200,
-            'data': StudentSer(all_student).data
-        }, status=200)
+            return Response({
+                'info': 'success',
+                'code': 200,
+                'data': StudentSer(create_student).data
+            }, status=200)
 
 
 class modify_student(APIView):
@@ -56,7 +60,6 @@ class modify_student(APIView):
         new_student_no = request.POST.get('new_student_no')
         new_student_name = request.POST.get('new_student_name')
         new_student_gender = request.POST.get('new_student_gender')
-        new_course_no = request.POST.get('new_course_no')
 
         ma_id = m_chk_token(token)
         if isinstance(ma_id, Response):
@@ -66,7 +69,6 @@ class modify_student(APIView):
         update_student.StudentNo = new_student_no
         update_student.StudentName = new_student_name
         update_student.StudentGender = new_student_gender
-        update_student.CourseNo = new_course_no
         update_student.save()
 
         all_student = student.objects.all()

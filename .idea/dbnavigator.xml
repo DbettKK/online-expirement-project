@@ -23,7 +23,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="24f1b39e-8763-45b7-bc35-258cc2ec982c">
+        <schema name="db" object-types="column, procedure, index, table, dataset trigger, constraint, function, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="538b6ddb-cf15-4532-8f7c-40a94ea1bcfe">
@@ -41,6 +45,11 @@
     <connection id="24f1b39e-8763-45b7-bc35-258cc2ec982c" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="24f1b39e-8763-45b7-bc35-258cc2ec982c" dataset="db.job_teacher" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="24f1b39e-8763-45b7-bc35-258cc2ec982c" dataset="db.job_manager" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="24f1b39e-8763-45b7-bc35-258cc2ec982c" dataset="db.job_student" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="24f1b39e-8763-45b7-bc35-258cc2ec982c" dataset="db.job_course_Student" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="24f1b39e-8763-45b7-bc35-258cc2ec982c" dataset="db.job_course" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="538b6ddb-cf15-4532-8f7c-40a94ea1bcfe" dataset="db.job_homework" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="538b6ddb-cf15-4532-8f7c-40a94ea1bcfe" dataset="db.job_manager" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="538b6ddb-cf15-4532-8f7c-40a94ea1bcfe" dataset="db.job_course" active-filter-id="">

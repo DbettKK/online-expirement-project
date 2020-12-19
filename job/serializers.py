@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import manager, teacher, student, course, homework, question, answer, submission, analysis, notice
+from .models import manager, teacher, student, course, homework, question, answer, submission, analysis, notice, sign, StudentSign
 
 
 class ManagerSer(serializers.ModelSerializer):
@@ -25,7 +25,7 @@ class HomeworkSer(serializers.ModelSerializer):
 
 
 class CouSer(serializers.ModelSerializer):
-    course_students = StudentSer(many=True)
+    # course_students = StudentSer(many=True)
     teacher_name = serializers.CharField(source='Teacher.TeacherName')
     # course_homework = HomeworkSer(many=True)
 
@@ -75,4 +75,19 @@ class NoticeSer(serializers.ModelSerializer):
 
     class Meta:
         model = notice
+        fields = '__all__'
+
+
+class SignSer(serializers.ModelSerializer):
+
+    class Meta:
+        model = sign
+        fields = '__all__'
+
+
+class StudentSignSer(serializers.ModelSerializer):
+    student_name=serializers.CharField(source='student.StudentName')
+
+    class Meta:
+        model = StudentSign
         fields = '__all__'

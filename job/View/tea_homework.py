@@ -3,6 +3,7 @@ from job.serializers import HomeworkSer, StuAnswerSer, QuestionSer, SubmissionSe
 from rest_framework.views import APIView, Response
 from django.db.models import Avg, Sum, Max, Min
 from job.views import t_chk_token, chk_course_id, chk_submission_id, chk_homework_id
+import json
 
 # 教师get作业列表 √
 class teacher_get_homework_list(APIView):
