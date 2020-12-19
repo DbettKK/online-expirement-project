@@ -57,7 +57,9 @@ class student(models.Model):
     need_to_sign = models.ManyToManyField(
         'sign',
         related_name='sign_students',
-        verbose_name='需要完成的签到'
+        verbose_name='需要完成的签到',
+        through = 'StudentSign',
+        through_fields = ('student', 'sign'),
     )
 
     def __str__(self):
@@ -208,11 +210,11 @@ class sign(models.Model):
         on_delete=models.CASCADE,
     )
 
-    sign_by = models.ManyToManyField(
-        'student',
-        related_name='student_signs',
-        verbose_name='需要进行此次签到的学生'
-    )
+    # sign_by = models.ManyToManyField(
+    #     'student',
+    #     related_name='student_signs',
+    #     verbose_name='需要进行此次签到的学生'
+    # )
 
     def __str__(self):
         return self.Title
@@ -221,6 +223,18 @@ class sign(models.Model):
         ordering = ['-PubTime']
         verbose_name = '签到'
         verbose_name_plural = verbose_name
+
+
+class StudentSign(models.Model):
+    student = models.ForeignKey('student', on_delete=models.CASCADE, verbose_name='签到学生')
+    sign = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='签到')
+    SignTime = models.DateTimeField(auto_now_add=True, verbose_name='签到时间')
+
+    class Meta:
+        ordering = ['-SignTime']
+
+    def __str__(self):
+        return self.student.StudentName
 
 
 class notice(models.Model):
