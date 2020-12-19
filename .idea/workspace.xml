@@ -1,37 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8b48136d-dc28-40dc-8c45-1e3ba45c9b73" name="Default Changelist" comment="12.18">
-      <change afterPath="$PROJECT_DIR$/job/View/manager_course.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/View/manager_notice.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/View/manager_student.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/View/manager_teacher.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/View/stu_sign.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/View/tea_sign.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0002_role.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0003_auto_20201206_1856.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0004_auto_20201206_1909.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0005_managertoken_studenttoken_teachertoken.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0006_auto_20201206_1942.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0007_auto_20201208_0846.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0008_auto_20201208_1810.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/0009_auto_20201218_2158.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    <list default="true" id="8b48136d-dc28-40dc-8c45-1e3ba45c9b73" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/logout.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/stu_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_homepage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/stu_homework.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_homework.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/tea_course.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/tea_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_homepage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/tea_homework.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_homework.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,18 +36,6 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -138,7 +98,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608307628009</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="数据库迁移">
+      <created>1608340537038</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1608340537038</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,6 +132,21 @@
     <MESSAGE value="12.17" />
     <MESSAGE value="12.18" />
     <MESSAGE value="12.19测试" />
-    <option name="LAST_COMMIT_MESSAGE" value="12.19测试" />
+    <MESSAGE value="数据库迁移" />
+    <option name="LAST_COMMIT_MESSAGE" value="数据库迁移" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="372" y="4" key="CommitChangelistDialog2" timestamp="1608340535591">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="372" y="4" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608340535591" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608340546322">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608340546322" />
+    <state x="426" y="203" key="git4idea.merge.GitPullDialog" timestamp="1608341787899">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="426" y="203" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1608341787899" />
   </component>
 </project>
