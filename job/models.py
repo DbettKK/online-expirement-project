@@ -227,7 +227,7 @@ class sign(models.Model):
 
 class StudentSign(models.Model):
     student = models.ForeignKey('student', on_delete=models.CASCADE, verbose_name='签到学生')
-    sign = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='签到')
+    sign = models.ForeignKey('sign', on_delete=models.CASCADE, verbose_name='签到')
     SignTime = models.DateTimeField(auto_now_add=True, verbose_name='签到时间')
 
     class Meta:
