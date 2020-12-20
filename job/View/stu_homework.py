@@ -64,7 +64,7 @@ class student_get_homework_detail(APIView):
         }, status=200)
 
 
-# 学生提交作业+自动批改作业
+# 学生提交作业+自动批改作业 √
 class handin_homework(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -91,6 +91,7 @@ class handin_homework(APIView):
 
 # 根据token获取学生学号
         stuno = student.objects.get(pk=stu_id).StudentNo
+        student_name = student.objects.get(pk=stu_id).StudentName
 
 
         if len(submission.objects.filter(Homework=homework_id, StudentNo=stuno)) > 0:  #已提交
@@ -117,6 +118,7 @@ class handin_homework(APIView):
 
                 create_submission = submission.objects.create(
                     StudentNo=stuno,
+                    StudentName=student_name,
                     SubTime=timezone.now(),
                     isSubmitted=True,
                     Homework=h
@@ -185,9 +187,8 @@ class handin_homework(APIView):
             #     }, status=400)
 
 
-# 学生get分数
+# 学生get分数 √
 class student_get_grade(APIView):
-
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')
         submission_id=request.GET.get('sub_id')
@@ -206,7 +207,7 @@ class student_get_grade(APIView):
         return Response({
             'info': 'success',
             'code': 200,
-            'data': StuAnswerSer(answers)
+            'data': StuAnswerSer(answers, many=True).data
         }, status=200)
 
 

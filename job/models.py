@@ -177,6 +177,7 @@ class question(models.Model):
 
 class submission(models.Model):
     StudentNo=models.CharField(verbose_name='学生学号', max_length=50, null=True)
+    StudentName=models.CharField(verbose_name='学生姓名', max_length=50, null=True)
     SubTime=models.DateTimeField(verbose_name='提交时间', max_length=50)
     TotalGrade=models.FloatField(verbose_name='总成绩', default='0', null=True)
 
