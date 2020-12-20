@@ -1,7 +1,8 @@
-from job.models import sign, StudentSign
-from job.serializers import SignSer, StudentSignSer
+from job.models import sign, studentsign, course, student
+from job.serializers import SignSer, StudentSignSer, StudentSer
 from rest_framework.views import APIView, Response
 from job.views import t_chk_token, chk_course_id, chk_sign_id
+import django.utils.timezone as timezone
 
 
 #get签到列表 √
@@ -36,7 +37,7 @@ class publish_sign(APIView):
         course_id=request.GET.get('course_id')
 
         title=request.POST.get('title')
-        pubtime=request.POST.get('pubtime')
+        # pubtime=request.POST.get('pubtime')
         endtime=request.POST.get('endtime')
 
         # 查token确认用户
@@ -50,15 +51,26 @@ class publish_sign(APIView):
 
         create_sign=sign.objects.create(
             Title=title,
-            PubTime=pubtime,
+            PubTime=timezone.now(),
             EndTime=endtime,
             Course=c
         )
 
+        # 通过course获取所有学生id
+        student_list = student.objects.filter(Course=course_id)
+        counts=student_list.count()
+        # 循环
+        for i in range(int(counts)):
+            create_studentsign=studentsign.objects.create(
+                student=student_list[i],
+                sign=create_sign,
+                isSigned=False
+            )
+
         return Response({
             'info': 'success',
             'code': 200,
-            'data': SignSer(create_sign, many=True).data
+            'data': SignSer(create_sign).data
         }, status=200)
 
 
@@ -101,7 +113,7 @@ class sign_detail(APIView):
         if isinstance(s, Response):
             return s
 
-        detail=StudentSign.objects.filter(sign=s)
+        detail=studentsign.objects.filter(sign=sign_id)
 
         return Response({
             'info': 'success',

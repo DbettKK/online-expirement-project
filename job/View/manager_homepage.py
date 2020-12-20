@@ -3,7 +3,7 @@ from job.serializers import ManagerSer
 from rest_framework.views import APIView, Response
 from job.views import m_chk_token
 
-# 管理员修改密码 √
+# 管理员修改密码 √√
 class manager_modify_password(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -31,5 +31,5 @@ class manager_modify_password(APIView):
         else:
             return Response({
                 'info': '旧密码错误',
-                'code': 403,
-            }, status=403)
+                'code': 400,
+            }, status=400)

@@ -12,7 +12,7 @@ class get_teacher_list(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        teacher_list = teacher.objects.all()
+        teacher_list = teacher.objects.all().order_by('TeacherNo')
 
         return Response({
             'info': 'success',
@@ -20,7 +20,7 @@ class get_teacher_list(APIView):
             'data': TeacherSer(teacher_list, many=True).data
         }, status=200)
 
-# √
+# √√
 class add_teacher(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -32,7 +32,8 @@ class add_teacher(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        if len(teacher.objects.filter(TeacherNo=teacher_no)) > 0:
+        isExist = teacher.objects.filter(TeacherNo=teacher_no)
+        if len(isExist) > 0:
             return Response({
                 'info': '该记录已存在',
                 'code': 403,
@@ -49,7 +50,7 @@ class add_teacher(APIView):
             return Response({
                 'info': 'success',
                 'code': 200,
-                'data': TeacherSer(create_teacher,many=True).data
+                'data': TeacherSer(create_teacher).data
             }, status=200)
 
 # √
@@ -65,18 +66,24 @@ class modify_teacher(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        update_teacher = teacher.objects.get(pk=teacher_id)
-        update_teacher.TeacherNo=new_teacher_no
-        update_teacher.TeacherName=new_teacher_name
-        update_teacher.TeacherGender=new_teacher_gender
-        update_teacher.save()
+        isExist=teacher.objects.filter(TeacherNo=new_teacher_no)
+        if len(isExist)>0:
+            return Response({
+                'info': '该记录已存在',
+                'code': 403,
+            }, status=403)
 
-        all_teacher = teacher.objects.all()
+        else:
+            update_teacher = teacher.objects.get(pk=teacher_id)
+            update_teacher.TeacherNo=new_teacher_no
+            update_teacher.TeacherName=new_teacher_name
+            update_teacher.TeacherGender=new_teacher_gender
+            update_teacher.save()
 
         return Response({
             'info': 'success',
             'code': 200,
-            'data': TeacherSer(all_teacher,many=True).data
+            'data': TeacherSer(update_teacher).data
         }, status=200)
 
 # √

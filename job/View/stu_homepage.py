@@ -12,7 +12,7 @@ class student_course(APIView):
         if isinstance(stu_id, Response):
             return stu_id
         print(stu_id)
-        course_list = student.objects.get(pk=stu_id).Course.all()
+        course_list = student.objects.get(pk=stu_id).Course.all().order_by('CourseNo')
 
         return Response({
             'info': 'success',
@@ -20,7 +20,7 @@ class student_course(APIView):
             'data': CouSer(course_list, many=True).data
         }, status=200)
 
-# √
+# 学生修改密码 √
 class student_modify_password(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -51,7 +51,7 @@ class student_modify_password(APIView):
                 'code': 403,
             }, status=403)
 
-
+# 学生获取公告信息 √
 class student_get_notice(APIView):
     def get(self, request):
         token = request.META.get('HTTP_TOKEN')
@@ -60,7 +60,7 @@ class student_get_notice(APIView):
         if isinstance(stu_id, Response):
             return stu_id
 
-        notice_list = notice.objects.all()
+        notice_list = notice.objects.all().order_by('-PubTime')
 
         return Response({
             'info': 'success',

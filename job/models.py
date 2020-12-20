@@ -92,16 +92,15 @@ class sign(models.Model):
         verbose_name_plural = verbose_name
 
 
-class StudentSign(models.Model):
+class studentsign(models.Model):
     student = models.ForeignKey('student', on_delete=models.CASCADE, verbose_name='签到学生')
     sign = models.ForeignKey('sign', on_delete=models.CASCADE, verbose_name='签到')
-    SignTime = models.DateTimeField(auto_now_add=True, verbose_name='签到时间')
+    SignTime = models.DateTimeField(verbose_name='签到时间', null=True)
+
+    isSigned = models.BooleanField(verbose_name='是否已签到', null=False)
 
     class Meta:
         ordering = ['-SignTime']
-
-    def __str__(self):
-        return self.student.StudentName
 
 
 class course(models.Model):

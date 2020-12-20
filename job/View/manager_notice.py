@@ -2,6 +2,7 @@ from job.models import notice
 from job.serializers import NoticeSer
 from rest_framework.views import APIView, Response
 from job.views import m_chk_token
+import django.utils.timezone as timezone
 
 # 请求公告列表 √
 class get_notice_list(APIView):
@@ -12,7 +13,7 @@ class get_notice_list(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        notice_list = notice.objects.all()
+        notice_list = notice.objects.all().order_by('-PubTime')
 
         return Response({
             'info': 'success',
@@ -26,7 +27,7 @@ class add_notice(APIView):
         token = request.META.get('HTTP_TOKEN')
         title = request.POST.get('title')
         content = request.POST.get('content')
-        pubtime = request.POST.get('pubtime')
+        # pubtime = request.POST.get('pubtime')
 
         ma_id = m_chk_token(token)
         if isinstance(ma_id, Response):
@@ -35,15 +36,13 @@ class add_notice(APIView):
         create_notice = notice.objects.create(
             Title=title,
             Content=content,
-            PubTime=pubtime
+            PubTime=timezone.now()
         )
-
-        all_notice = notice.objects.all()
 
         return Response({
             'info': 'success',
             'code': 200,
-            'data': NoticeSer(all_notice).data
+            'data': NoticeSer(create_notice).data
         }, status=200)
 
 # 删除公告 √

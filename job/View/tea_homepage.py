@@ -12,7 +12,7 @@ class teacher_course(APIView):
         if isinstance(tea_id, Response):
             return tea_id
 
-        course_list = teacher.objects.get(pk=tea_id).teacher_courses.all()
+        course_list = teacher.objects.get(pk=tea_id).teacher_courses.all().order_by('CourseNo')
 
         return Response({
             'info': 'success',
@@ -60,7 +60,7 @@ class teacher_get_notice(APIView):
         if isinstance(tea_id, Response):
             return tea_id
 
-        notice_list = notice.objects.all()
+        notice_list = notice.objects.all().order_by('-PubTime')
 
         return Response({
             'info': 'success',

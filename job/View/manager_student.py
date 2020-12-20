@@ -12,7 +12,7 @@ class get_student_list(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        student_list = student.objects.all()
+        student_list = student.objects.all().order_by('StudentNo')
 
         return Response({
             'info': 'success',
@@ -65,19 +65,24 @@ class modify_student(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        update_student = student.objects.get(pk=student_id)
-        update_student.StudentNo = new_student_no
-        update_student.StudentName = new_student_name
-        update_student.StudentGender = new_student_gender
-        update_student.save()
+        if len(student.objects.filter(StudentNo=new_student_no)) > 0:
+            return Response({
+                'info': '该记录已存在',
+                'code': 403,
+            }, status=403)
 
-        all_student = student.objects.all()
+        else:
+            update_student = student.objects.get(pk=student_id)
+            update_student.StudentNo = new_student_no
+            update_student.StudentName = new_student_name
+            update_student.StudentGender = new_student_gender
+            update_student.save()
 
-        return Response({
-            'info': 'success',
-            'code': 200,
-            'data': StudentSer(all_student).data
-        }, status=200)
+            return Response({
+                'info': 'success',
+                'code': 200,
+                'data': StudentSer(update_student).data
+            }, status=200)
 
 # √
 class delete_student(APIView):

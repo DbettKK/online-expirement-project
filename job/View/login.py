@@ -4,7 +4,7 @@ from job.serializers import ManagerSer, TeacherSer, StudentSer
 from job.views import md5
 
 
-# 三类用户登录视图 √
+# 三类用户登录视图 √√
 class login(APIView):
     authentication_classes = []
 

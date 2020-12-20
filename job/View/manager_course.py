@@ -1,4 +1,4 @@
-from job.models import course
+from job.models import course, teacher
 from job.serializers import CouSer
 from rest_framework.views import APIView, Response
 from job.views import m_chk_token
@@ -33,17 +33,19 @@ class add_course(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        if len(course.objects.filter(CourseNo=teacher_no)) > 0:
+        isExist = course.objects.filter(CourseNo=course_no)
+        if len(isExist) > 0:
             return Response({
                 'info': '该记录已存在',
                 'code': 403,
             }, status=403)
 
         else:
+            tea=teacher.objects.get(TeacherNo=teacher_no)
             create_course = course.objects.create(
                 CourseNo=course_no,
                 CourseName=course_name,
-                TeacherNo=teacher_no
+                Teacher=tea
             )
 
             return Response({
@@ -65,18 +67,25 @@ class modify_course(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        update_course = course.objects.get(pk=course_id)
-        update_course.CourseNo = new_course_no
-        update_course.CourseName = new_course_name
-        update_course.TeacherNo = new_teacher_no
-        update_course.save()
+        isExist = course.objects.filter(CourseNo=new_course_no)
+        if len(isExist) > 0:
+            return Response({
+                'info': '该记录已存在',
+                'code': 403,
+            }, status=403)
 
-        all_course = course.objects.all()
+        else:
+            update_course = course.objects.get(pk=course_id)
+            update_course.CourseNo = new_course_no
+            update_course.CourseName = new_course_name
+            update_course.TeacherNo = new_teacher_no
+            update_course.save()
+
 
         return Response({
             'info': 'success',
             'code': 200,
-            'data': CouSer(all_course).data
+            'data': CouSer(update_course).data
         }, status=200)
 
 # 删除课程 √
