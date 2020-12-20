@@ -40,19 +40,19 @@ urlpatterns=[
     path('teacher/password/', views.teacher_modify_password.as_view()), #
     path('teacher/notice/', views.teacher_get_notice.as_view()), #
 
-    path('teacher/homework/', views.teacher_get_homework_list.as_view()),
-    path('teacher/homework/add/', views.publish_homework.as_view()),
-    path('teacher/homework/check/', views.teacher_get_homework_detail.as_view()),
-    path('teacher/homework/list/', views.get_completed_list.as_view()),
+    path('teacher/homework/', views.teacher_get_homework_list.as_view()),#
+    path('teacher/homework/add/', views.publish_homework.as_view()),#
+    path('teacher/homework/check/', views.teacher_get_homework_detail.as_view()),#
+    path('teacher/homework/list/', views.get_completed_list.as_view()),#
     path('teacher/homework/completed/', views.get_completed_homework.as_view()),
     path('teacher/homework/score/', views.manual_score.as_view()),
     path('teacher/homework/analysis/', views.homework_analysis.as_view()),
     path('teacher/homework/delete/', views.delete_homework.as_view()),
 
-    path('teacher/sign/', views.teacher_get_sign_list.as_view()),
-    path('teacher/sign/add/', views.publish_sign.as_view()),
-    path('teacher/sign/detail/', views.sign_detail.as_view()),
-    path('teacher/sign/delete/', views.delete_sign.as_view()),
+    path('teacher/sign/', views.teacher_get_sign_list.as_view()), #
+    path('teacher/sign/add/', views.publish_sign.as_view()), #
+    path('teacher/sign/detail/', views.sign_detail.as_view()), #
+    path('teacher/sign/delete/', views.delete_sign.as_view()), #
 
 
     # 学生
@@ -60,13 +60,13 @@ urlpatterns=[
     path('student/password/', views.student_modify_password.as_view()), #
     path('student/notice/', views.student_get_notice.as_view()), #
 
-    path('student/homework/', views.student_get_homework.as_view()),
-    path('student/homework/detail/', views.student_get_homework_detail.as_view()),
+    path('student/homework/', views.student_get_homework.as_view()), #
+    path('student/homework/detail/', views.student_get_homework_detail.as_view()),#
     path('student/homework/add/', views.handin_homework.as_view()),
     path('student/homework/grade/', views.student_get_grade.as_view()),
 
-    path('student/sign/', views.student_get_sign.as_view()),
-    path('student/sign/add/', views.student_sign.as_view())
+    path('student/sign/', views.student_get_sign.as_view()), #
+    path('student/sign/add/', views.student_sign.as_view()), #
 
 ]
 

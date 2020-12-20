@@ -3,18 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8b48136d-dc28-40dc-8c45-1e3ba45c9b73" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/login.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_course.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_course.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_homepage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_notice.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_notice.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_student.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_student.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_teacher.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_teacher.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/stu_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_homepage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/stu_sign.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_sign.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/tea_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_homepage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/View/stu_homework.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_homework.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/View/tea_homework.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_homework.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job/View/tea_sign.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_sign.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -179,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608440998625</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="12.20下午">
+      <created>1608454156526</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1608454156526</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,6 +210,7 @@
     <MESSAGE value="12.19晚" />
     <MESSAGE value="最后一次了" />
     <MESSAGE value="配置了url" />
-    <option name="LAST_COMMIT_MESSAGE" value="配置了url" />
+    <MESSAGE value="12.20下午" />
+    <option name="LAST_COMMIT_MESSAGE" value="12.20下午" />
   </component>
 </project>

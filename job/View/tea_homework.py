@@ -4,6 +4,7 @@ from rest_framework.views import APIView, Response
 from django.db.models import Avg, Sum, Max, Min
 from job.views import t_chk_token, chk_course_id, chk_submission_id, chk_homework_id
 import json
+import django.utils.timezone as timezone
 
 # 教师get作业列表 √
 class teacher_get_homework_list(APIView):
@@ -35,17 +36,14 @@ class publish_homework(APIView):
         token = request.META.get('HTTP_TOKEN')
         course_id = request.GET.get('course_id')
         title = request.POST.get('title')
-        pubtime = request.POST.get('pubtime')
+        # pubtime = request.POST.get('pubtime')
         endtime = request.POST.get('endtime')
 
         json_list = request.POST.get('json_list')
         '''
         示例：
-        [
-            {"quesno":"1","type":"0","content":"这是第一道选择题的题目","correctans":"正确答案A","score":"该题分值"},
-            {"quesno":"2","type":"0","content":"这是第二道填空题的题目","correctans":"正确答案","score":"该题分值"},
-            ......
-        ]
+        [{"quesno":"1","type":"0","content":"这是第一道选择题的题目","correctans":"正确答案A","score":"该题分值"},
+        {"quesno":"2","type":"0","content":"这是第二道填空题的题目","correctans":"正确答案","score":"该题分值"}]
         其中type：客观题为0，主观题为1
         '''
 
@@ -60,7 +58,7 @@ class publish_homework(APIView):
         # 向作业表中添加记录
         create_homework = homework.objects.create(
             Title=title,
-            PubTime=pubtime,
+            PubTime=timezone.now(),
             EndTime=endtime,
             Course=c
         )
@@ -69,14 +67,12 @@ class publish_homework(APIView):
         print(list)
         # 向question中批量添加记录
         for i in list:
-            quesno = int(i['quesno'])
-            score = int(i['score'])
             create_question = question.objects.create(
-                QuesNo=quesno,
+                QuesNo=i['quesno'],
                 Type=i['type'],
                 Content=i['content'],
                 CorrectAnswer=i['correctans'],
-                Score=score,
+                Score=i['score'],
                 Homework=create_homework
             )
 
@@ -113,7 +109,7 @@ class teacher_get_homework_detail(APIView):
         }, status=200)
 
 
-# 教师get学生完成情况列表 √
+# 教师get学生完成情况列表
 class get_completed_list(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')
@@ -138,7 +134,7 @@ class get_completed_list(APIView):
         }, status=200)
 
 
-# 教师get学生已完成的作业 √
+# 教师get学生已完成的作业
 class get_completed_homework(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')
@@ -163,7 +159,7 @@ class get_completed_homework(APIView):
         }, status=200)
 
 
-# 教师手动批改主观题 √
+# 教师手动批改主观题
 class manual_score(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')

@@ -68,8 +68,8 @@ class student_get_homework_detail(APIView):
 class handin_homework(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        homework_id = request.POST.get('homework_id')
-        subtime = request.POST.get('subtime')
+        homework_id = request.GET.get('homework_id')
+        # subtime = request.POST.get('subtime')
 
         json_list = request.POST.get('json_list')
         '''
@@ -80,11 +80,11 @@ class handin_homework(APIView):
             ......
         ]
         '''
-
+        # 查token确认用户
         stu_id = s_chk_token(token)
         if isinstance(stu_id, Response):
             return stu_id
-
+        # 确认作业chk_homework
         h = chk_homework_id(homework_id)
         if isinstance(h, Response):
             return h
@@ -92,7 +92,8 @@ class handin_homework(APIView):
 # 根据token获取学生学号
         stuno = student.objects.get(pk=stu_id).StudentNo
 
-        if len(submission.objects.get(Homework=homework_id, StudentNo=stuno)) > 0:  #已提交
+
+        if len(submission.objects.filter(Homework=homework_id, StudentNo=stuno)) > 0:  #已提交
             # 查看作业表和答案表
             return Response({
                 'info': '已经完成过作业，跳转到查看已完成作业、答案和分数的页面',
@@ -116,17 +117,16 @@ class handin_homework(APIView):
 
                 create_submission = submission.objects.create(
                     StudentNo=stuno,
-                    SubTime=subtime,
+                    SubTime=timezone.now(),
                     isSubmitted=True,
                     Homework=h
                 )
 
                 # 向answer中批量添加记录
                 for i in list:
-                    quesno=i['quesno']
-                    create_answer = question.objects.create(
-                        QuesNo=quesno,
-                        Type=i['stuans'],
+                    create_answer = answer.objects.create(
+                        QuesNo=i['quesno'],
+                        StudentAnswer=i['stuans'],
                         Submission=create_submission
                     )
 
@@ -138,23 +138,23 @@ class handin_homework(APIView):
 
                 # 取题目表中所有题的记录
                 all_questions = question.objects.filter(Homework=homework_id)
-                # # 取所有题个数
-                # all_counts = all_questions.count()
+                # 取所有题个数
+                all_counts = all_questions.count()
                 # # 取该次作业所有题的类型type
                 # all_type = all_questions.Type
 
                 # 循环计分
-                for i in all_questions:
+                for i in range(int(all_counts)):
                     # 如果不是客观题就跳出当前循环
-                    if i.Type != '0':
+                    if all_questions[i].Type != '0':
                         continue
                     # 分别取出标准答案和学生答案
-                    correct_answer = all_questions[i-1].CorrectAnswer
-                    student_answer = all_answers[i-1].StudentAnswer
+                    correct_answer = all_questions[i].CorrectAnswer
+                    student_answer = all_answers[i].StudentAnswer
                     # 取出学生那道题的记录
-                    certain_answer = all_answers[i-1]
+                    certain_answer = all_answers[i]
                     # 取出那道题的分值
-                    score = all_questions[i-1].Score
+                    score = all_questions[i].Score
                     # 比较学生答案和标准答案并给分
                     if student_answer == correct_answer:
                         certain_answer.Grade = score
@@ -167,9 +167,10 @@ class handin_homework(APIView):
                 student_submission = submission.objects.get(pk=sub_id)
                 # 所有答案记录
                 all_answers = answer.objects.filter(Submission=sub_id)
-                totalgrade = all_answers.aggregate(Sum('Grade'))
-                student_submission.update(TotalGrade = totalgrade)
-                # student_submission.save()
+                total = all_answers.aggregate(Sum('Grade'))
+                totalgrade = total['Grade__sum']
+                student_submission.TotalGrade = totalgrade
+                student_submission.save()
 
                 return Response({
                     'info': 'success',
@@ -207,3 +208,5 @@ class student_get_grade(APIView):
             'code': 200,
             'data': StuAnswerSer(answers)
         }, status=200)
+
+
