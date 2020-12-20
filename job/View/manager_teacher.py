@@ -57,7 +57,7 @@ class add_teacher(APIView):
 class modify_teacher(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        teacher_id = request.GET.get('teacher_id')
+        teacher_id = request.POST.get('teacher_id')
         new_teacher_no = request.POST.get('new_teacher_no')
         new_teacher_name=request.POST.get('new_teacher_name')
         new_teacher_gender = request.POST.get('new_teacher_gender')
@@ -66,19 +66,11 @@ class modify_teacher(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        isExist=teacher.objects.filter(TeacherNo=new_teacher_no)
-        if len(isExist)>0:
-            return Response({
-                'info': '该记录已存在',
-                'code': 403,
-            }, status=403)
-
-        else:
-            update_teacher = teacher.objects.get(pk=teacher_id)
-            update_teacher.TeacherNo=new_teacher_no
-            update_teacher.TeacherName=new_teacher_name
-            update_teacher.TeacherGender=new_teacher_gender
-            update_teacher.save()
+        update_teacher = teacher.objects.get(pk=teacher_id)
+        update_teacher.TeacherNo=new_teacher_no
+        update_teacher.TeacherName=new_teacher_name
+        update_teacher.TeacherGender=new_teacher_gender
+        update_teacher.save()
 
         return Response({
             'info': 'success',

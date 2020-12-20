@@ -58,7 +58,7 @@ class add_course(APIView):
 class modify_course(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        course_id = request.GET.get('course_id')
+        course_id = request.POST.get('course_id')
         new_course_no = request.POST.get('new_course_no')
         new_course_name = request.POST.get('new_course_name')
         new_teacher_no= request.POST.get('new_teacher_no')
@@ -67,19 +67,12 @@ class modify_course(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        isExist = course.objects.filter(CourseNo=new_course_no)
-        if len(isExist) > 0:
-            return Response({
-                'info': '该记录已存在',
-                'code': 403,
-            }, status=403)
 
-        else:
-            update_course = course.objects.get(pk=course_id)
-            update_course.CourseNo = new_course_no
-            update_course.CourseName = new_course_name
-            update_course.TeacherNo = new_teacher_no
-            update_course.save()
+        update_course = course.objects.get(pk=course_id)
+        update_course.CourseNo = new_course_no
+        update_course.CourseName = new_course_name
+        update_course.TeacherNo = new_teacher_no
+        update_course.save()
 
 
         return Response({

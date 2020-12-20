@@ -34,7 +34,7 @@ class teacher_get_sign_list(APIView):
 class publish_sign(APIView):
     def post(self, request):
         token=request.META.get('HTTP_TOKEN')
-        course_id=request.GET.get('course_id')
+        course_id=request.POST.get('course_id')
 
         title=request.POST.get('title')
         # pubtime=request.POST.get('pubtime')
@@ -98,7 +98,7 @@ class delete_sign(APIView):
         }, status=200)
 
 
-# 学生签到详情 √0000
+# 学生签到详情 √
 class sign_detail(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')

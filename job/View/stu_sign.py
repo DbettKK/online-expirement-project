@@ -41,7 +41,7 @@ class student_get_sign(APIView):
 class student_sign(APIView):
     def post(self, request):
         token=request.META.get('HTTP_TOKEN')
-        sign_id=request.GET.get('sign_id')
+        sign_id=request.POST.get('sign_id')
         # sign_time=request.POST.get('sign_time')
 
         # 查token确认用户

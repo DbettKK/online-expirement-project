@@ -68,7 +68,7 @@ class student_get_homework_detail(APIView):
 class handin_homework(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        homework_id = request.GET.get('homework_id')
+        homework_id = request.POST.get('homework_id')
         # subtime = request.POST.get('subtime')
 
         json_list = request.POST.get('json_list')

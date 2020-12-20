@@ -34,7 +34,7 @@ class teacher_get_homework_list(APIView):
 class publish_homework(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        course_id = request.GET.get('course_id')
+        course_id = request.POST.get('course_id')
         title = request.POST.get('title')
         # pubtime = request.POST.get('pubtime')
         endtime = request.POST.get('endtime')
@@ -163,7 +163,7 @@ class get_completed_homework(APIView):
 class manual_score(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        submission_id = request.GET.get('submission_id')
+        submission_id = request.POST.get('submission_id')
 
         json_list = request.POST.get('json_list')
         '''

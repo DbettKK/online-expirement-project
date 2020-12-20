@@ -56,7 +56,7 @@ class add_student(APIView):
 class modify_student(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        student_id = request.GET.get('student_id')
+        student_id = request.POST.get('student_id')
         new_student_no = request.POST.get('new_student_no')
         new_student_name = request.POST.get('new_student_name')
         new_student_gender = request.POST.get('new_student_gender')
@@ -65,24 +65,17 @@ class modify_student(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-        if len(student.objects.filter(StudentNo=new_student_no)) > 0:
-            return Response({
-                'info': '该记录已存在',
-                'code': 403,
-            }, status=403)
+        update_student = student.objects.get(pk=student_id)
+        update_student.StudentNo = new_student_no
+        update_student.StudentName = new_student_name
+        update_student.StudentGender = new_student_gender
+        update_student.save()
 
-        else:
-            update_student = student.objects.get(pk=student_id)
-            update_student.StudentNo = new_student_no
-            update_student.StudentName = new_student_name
-            update_student.StudentGender = new_student_gender
-            update_student.save()
-
-            return Response({
-                'info': 'success',
-                'code': 200,
-                'data': StudentSer(update_student).data
-            }, status=200)
+        return Response({
+            'info': 'success',
+            'code': 200,
+            'data': StudentSer(update_student).data
+        }, status=200)
 
 # √
 class delete_student(APIView):

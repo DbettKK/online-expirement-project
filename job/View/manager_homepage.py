@@ -7,7 +7,7 @@ from job.views import m_chk_token
 class manager_modify_password(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        manager_id = request.GET.get('manager_id')
+        manager_id = request.POST.get('manager_id')
         old_pwd = request.POST.get('old_pwd')
         new_pwd = request.POST.get('new_pwd')
 

@@ -24,7 +24,7 @@ class student_course(APIView):
 class student_modify_password(APIView):
     def post(self, request):
         token = request.META.get('HTTP_TOKEN')
-        student_id = request.GET.get('student_id')
+        student_id = request.POST.get('student_id')
         old_pwd = request.POST.get('old_pwd')
         new_pwd = request.POST.get('new_pwd')
 
