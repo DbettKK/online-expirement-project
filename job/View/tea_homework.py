@@ -1,4 +1,4 @@
-from job.models import course, question, homework, answer, submission, analysis
+from job.models import course, question, homework, answer, submission, analysis, student
 from job.serializers import HomeworkSer, StuAnswerSer, QuestionSer, SubmissionSer, AnalysisSer, CouSer
 from rest_framework.views import APIView, Response
 from django.db.models import Avg, Sum, Max, Min
@@ -109,7 +109,7 @@ class teacher_get_homework_detail(APIView):
         }, status=200)
 
 
-# 教师get学生完成情况列表
+# 教师get学生完成情况列表 √
 class get_completed_list(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')
@@ -197,8 +197,10 @@ class manual_score(APIView):
         student_submission = submission.objects.get(pk=submission_id)
         # 所有答案记录
         all_answers = answer.objects.filter(Submission=submission_id)
-        totalgrade = all_answers.aggregate(Sum('Grade'))
-        student_submission.update(TotalGrade=totalgrade)
+        total = all_answers.aggregate(Sum('Grade'))
+        totalgrade = total['Grade__sum']
+        student_submission.TotalGrade = totalgrade
+        student_submission.save()
 
         return Response({
             'info': 'success',
@@ -222,29 +224,40 @@ class homework_analysis(APIView):
         if isinstance(h, Response):
             return h
 
-        if len(analysis.objects.get(Homework=homework_id)) > 0:
+        if len(analysis.objects.filter(Homework=homework_id)) > 0:
             pass
 
         else:
             # 本次作业人数，平均分，满分，最高分，最低分，各分数人数分布，每道题目回答的正确率；
             ##### 本次作业需完成人数
-            course_id=homework.obejcts.first(pk=homework_id).Course
-            all_counts=course.objects.filter(pk=course_id).count()
+            course_id=homework.objects.get(pk=homework_id).Course
+            students=student.objects.filter(Course=course_id)
+            all_counts=students.count()
+
             # 先提取出提交表中本次作业的所有提交记录
             all_submission=submission.objects.filter(Homework=homework_id)
             ##### 本次作业提交人数
             # count作业id为homeworkid的提交记录数量
-            submission_counts=all_submission.counts()
+            submission_counts=all_submission.count()
+
             ##### 平均分
             # 先提取出提交表中本次作业的所有提交记录，然后对TotalGrade求平均
-            average=all_submission.aggregate(Avg('TotalGrade'))
+            ave=all_submission.aggregate(Avg('TotalGrade'))
+            print(ave)
+            average = ave['TotalGrade__avg']
+
             ##### 满分
             all_question=question.objects.filter(Homework=homework_id)
-            full=all_question.aggregate(Sum('Score'))
+            f=all_question.aggregate(Sum('Score'))
+            full = f['Score__sum']
+
             ##### 最高分
-            max=all_submission.aggregate(Max('TotalGrade'))
+            ma=all_submission.aggregate(Max('TotalGrade'))
+            max = ma['TotalGrade__max']
+
             ##### 最低分
-            min=all_submission.aggregate(Min('TotalGrade'))
+            mi=all_submission.aggregate(Min('TotalGrade'))
+            min = mi['TotalGrade__min']
 
             create_analysis=analysis.objects.create(
                 AllCounts=all_counts,
