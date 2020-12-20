@@ -4,7 +4,7 @@ from rest_framework.views import APIView, Response
 from job.views import s_chk_token, chk_sign_id, chk_course_id
 import django.utils.timezone as timezone
 
-#get签到 √
+#get签到
 class student_get_sign(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')
@@ -30,7 +30,7 @@ class student_get_sign(APIView):
         if isinstance(s, Response):
             return s
 
-        if len(StudentSign.objects.filter(student=stu, sign=s)) > 0:
+        if len(StudentSign.objects.get(student=stu, sign=s)) > 0:
             return Response({
                 'info': '你已经完成签到了',
                 'code': 403,

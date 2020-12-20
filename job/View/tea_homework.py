@@ -46,6 +46,7 @@ class publish_homework(APIView):
             {"quesno":"2","type":"0","content":"这是第二道填空题的题目","correctans":"正确答案","score":"该题分值"},
             ......
         ]
+        其中type：客观题为0，主观题为1
         '''
 
         tea_id = t_chk_token(token)
@@ -68,12 +69,14 @@ class publish_homework(APIView):
         print(list)
         # 向question中批量添加记录
         for i in list:
+            quesno = int(i['quesno'])
+            score = int(i['score'])
             create_question = question.objects.create(
-                QuesNo=i['quesno'],
+                QuesNo=quesno,
                 Type=i['type'],
                 Content=i['content'],
                 CorrectAnswer=i['correctans'],
-                Score=i['score'],
+                Score=score,
                 Homework=create_homework
             )
 
@@ -171,7 +174,7 @@ class manual_score(APIView):
         示例：
         [
             {"quesno":"1","grade":"24"},
-            {"quesno":"2","type":"12"},
+            {"quesno":"2","grade":"12"},
             ......
         ]
         '''
@@ -186,20 +189,29 @@ class manual_score(APIView):
 
         list = json.loads(json_list)
         print(list)
-        # 向question中批量添加记录
+        # answer中批量添加记录
         for i in list:
-            update_grade = answer.objects.get(Submission=submission_id, QuesNo=i['quesno'])
-            update_grade.Grade = i['grade']
+            quesno = i['quesno']
+            grade = i['grade']
+            update_grade = answer.objects.get(Submission=submission_id, QuesNo=quesno)
+            update_grade.Grade = grade
             update_grade.save()
+
+        # 提交表记录
+        student_submission = submission.objects.get(pk=submission_id)
+        # 所有答案记录
+        all_answers = answer.objects.filter(Submission=submission_id)
+        totalgrade = all_answers.aggregate(Sum('Grade'))
+        student_submission.update(TotalGrade=totalgrade)
 
         return Response({
             'info': 'success',
             'code': 200,
-            'data': StuAnswerSer(update_grade).data
+            'data': StuAnswerSer(all_answers, many=True).data
         }, status=200)
 
 
-# 作业情况分析 ×未测试
+# 作业情况分析
 class homework_analysis(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')
@@ -213,39 +225,47 @@ class homework_analysis(APIView):
         h = chk_homework_id(homework_id)
         if isinstance(h, Response):
             return h
-        # 本次作业人数，平均分，满分，最高分，最低分，各分数人数分布，每道题目回答的正确率；
-        ##### 本次作业需完成人数
-        course_id=homework.obejcts.first(pk=homework_id).CourseNo
-        all_counts=course.objects.filter(CourseNo=course_id).count()
-        # 先提取出提交表中本次作业的所有提交记录
-        all_submission=submission.objects.filter(HomeworkID=homework_id)
-        ##### 本次作业提交人数
-        # count作业id为homeworkid的提交记录数量
-        submission_counts=all_submission.counts()
-        ##### 平均分
-        # 先提取出提交表中本次作业的所有提交记录，然后对TotalGrade求平均
-        average=all_submission.aggregate(Avg('TotalGrade'))
-        ##### 满分
-        all_question=question.objects.filter(HomeworkID=homework_id)
-        full=all_question.aggregate(Sum('Score'))
-        ##### 最高分
-        max=all_submission.aggregate(Max('TotalGrade'))
-        ##### 最低分
-        min=all_submission.aggregate(Min('TotalGrade'))
 
-        create_analysis=analysis.objects.create(
-            AllCounts=all_counts,
-            SubCounts=submission_counts,
-            Average=average,
-            Full=full,
-            Max=max,
-            Min=min
-        )
+        if len(analysis.objects.get(Homework=homework_id)) > 0:
+            pass
+
+        else:
+            # 本次作业人数，平均分，满分，最高分，最低分，各分数人数分布，每道题目回答的正确率；
+            ##### 本次作业需完成人数
+            course_id=homework.obejcts.first(pk=homework_id).Course
+            all_counts=course.objects.filter(pk=course_id).count()
+            # 先提取出提交表中本次作业的所有提交记录
+            all_submission=submission.objects.filter(Homework=homework_id)
+            ##### 本次作业提交人数
+            # count作业id为homeworkid的提交记录数量
+            submission_counts=all_submission.counts()
+            ##### 平均分
+            # 先提取出提交表中本次作业的所有提交记录，然后对TotalGrade求平均
+            average=all_submission.aggregate(Avg('TotalGrade'))
+            ##### 满分
+            all_question=question.objects.filter(Homework=homework_id)
+            full=all_question.aggregate(Sum('Score'))
+            ##### 最高分
+            max=all_submission.aggregate(Max('TotalGrade'))
+            ##### 最低分
+            min=all_submission.aggregate(Min('TotalGrade'))
+
+            create_analysis=analysis.objects.create(
+                AllCounts=all_counts,
+                SubCounts=submission_counts,
+                Average=average,
+                Full=full,
+                Max=max,
+                Min=min,
+                Homework=h
+            )
+
+        get_analysis = analysis.objects.get(Homework=homework_id)
 
         return Response({
             'info': 'success',
             'code': 200,
-            'data': AnalysisSer(create_analysis).data
+            'data': AnalysisSer(get_analysis).data
         }, status=200)
 
 

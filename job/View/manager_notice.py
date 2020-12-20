@@ -20,9 +20,6 @@ class get_notice_list(APIView):
             'data': NoticeSer(notice_list, many=True).data
         }, status=200)
 
-# 请求公告详情还未写
-# class get_notice_detial(APIView):
-
 # 添加公告 √
 class add_notice(APIView):
     def post(self, request):

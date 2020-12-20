@@ -57,7 +57,7 @@ class SubmissionSer(serializers.ModelSerializer):
 
 
 class StuAnswerSer(serializers.ModelSerializer):
-    # Submission = SubmissionSer(many=True)
+    totalgrade=serializers.CharField(source='Submission.TotalGrade')
 
     class Meta:
         model = answer

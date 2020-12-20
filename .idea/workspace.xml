@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b48136d-dc28-40dc-8c45-1e3ba45c9b73" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/View/manager_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_homepage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/View/manager_notice.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_notice.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/View/stu_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_homepage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job/View/stu_homework.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_homework.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/View/stu_sign.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_sign.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/View/tea_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_homepage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job/View/tea_homework.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_homework.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -146,7 +155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608390661519</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="12.19晚">
+      <created>1608390971639</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1608390971639</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
