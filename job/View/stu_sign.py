@@ -45,7 +45,7 @@ class student_get_sign(APIView):
 
 
 # 完成签到 ×未测试
-class sign(APIView):
+class student_sign(APIView):
     def post(self, request):
         token=request.META.get('HTTP_TOKEN')
         sign_id=request.GET.get('sign_id')
