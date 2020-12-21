@@ -14,16 +14,24 @@ class student_get_sign(APIView):
         stu_id = s_chk_token(token)
         if isinstance(stu_id, Response):
             return stu_id
-        stu = student.objects.get(pk=stu_id)
+        # stu = student.objects.get(pk=stu_id)
 
         # 确认是哪门课
         c = chk_course_id(course_id)
         if isinstance(c, Response):
             return c
 
-        time_now = timezone.now()
-        # 获取签到
-        sign_ing = sign.objects.get(Course=c, EndTime__gt=time_now)
+        try:
+            time_now = timezone.now()
+            # 获取签到
+            sign_ing = sign.objects.get(Course=c, EndTime__gt=time_now)
+
+        except:
+            return Response({
+                'info': '暂无正在进行的签到',
+                'code': 403,
+            }, status=403)
+
         sign_id = sign_ing.pk
 
         s = chk_sign_id(sign_id)
@@ -48,7 +56,7 @@ class student_sign(APIView):
         stu_id = s_chk_token(token)
         if isinstance(stu_id, Response):
             return stu_id
-        stu = student.objects.get(pk=stu_id)
+        # stu = student.objects.get(pk=stu_id)
 
         # 确认是哪个签到
         s = chk_sign_id(sign_id)
