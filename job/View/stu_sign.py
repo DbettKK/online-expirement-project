@@ -69,13 +69,22 @@ class student_sign(APIView):
         #     SignTime=timezone.now()
         #     isSigned
         # )
-        update_sign=studentsign.objects.get(student=stu_id, sign=sign_id)
-        update_sign.SignTime=timezone.now()
-        update_sign.isSigned=True
-        update_sign.save()
+        isExist = studentsign.objects.filter(student=stu_id, sign=sign_id)
+        if len(isExist) > 0:
+            return Response({
+                'info': '你已经签过到了',
+                'code': 403,
+                # 'data': StudentSignSer(update_sign).data
+            }, status=403)
 
-        return Response({
-            'info': 'success',
-            'code': 200,
-            'data': StudentSignSer(update_sign).data
-        }, status=200)
+        else:
+            update_sign=studentsign.objects.get(student=stu_id, sign=sign_id)
+            update_sign.SignTime=timezone.now()
+            update_sign.isSigned=True
+            update_sign.save()
+
+            return Response({
+                'info': 'success',
+                'code': 200,
+                'data': StudentSignSer(update_sign).data
+            }, status=200)

@@ -11,24 +11,23 @@ class student_get_homework(APIView):
     def get(self, request):
         token=request.META.get('HTTP_TOKEN')
         course_id=request.GET.get('course_id')
-# 查token确认用户
+
         stu_id = s_chk_token(token)
         if isinstance(stu_id, Response):
             return stu_id
-        stuno = student.objects.get(pk=stu_id).StudentNo
+        # stuno = student.objects.get(pk=stu_id).StudentNo
 
-# 确认是哪门课
         c = chk_course_id(course_id)
         if isinstance(c, Response):
             return c
 
 # 获取作业列表
         time_now=timezone.now()
-        # 过期作业,截止时间小于等于现在
+        # 过期作业
         expired_homework = homework.objects.filter(Course=course_id, EndTime__lte=time_now)
-        # 未过期作业，截止时间大于现在
-        unexpired_homework = homework.objects.filter(Course=course_id, EndTime__gt=time_now)
-# 将作业时间状态存入数据库，默认为未过期，所以只用更新已过期的作业记录
+        # 未过期作业
+        # unexpired_homework = homework.objects.filter(Course=course_id, EndTime__gt=time_now)
+
         expired_homework.update(isExpired = True)
         # expired_homework.save()
 

@@ -11,7 +11,7 @@ class student_course(APIView):
         stu_id = s_chk_token(token)
         if isinstance(stu_id, Response):
             return stu_id
-        print(stu_id)
+        # print(stu_id)
         course_list = student.objects.get(pk=stu_id).Course.all().order_by('CourseNo')
 
         return Response({
