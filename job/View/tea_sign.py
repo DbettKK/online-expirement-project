@@ -49,29 +49,40 @@ class publish_sign(APIView):
         if isinstance(c, Response):
             return c
 
-        create_sign=sign.objects.create(
-            Title=title,
-            PubTime=timezone.now(),
-            EndTime=endtime,
-            Course=c
-        )
+        # 筛选出未过期的签到
+        time_now = timezone.now()
+        isExist = sign.objects.filter(Course=course_id, EndTime__gt=time_now)
+        # 如果有
+        if len(isExist) > 0:
+            return Response({
+                'info': '该门课程已存在正在进行的签到',
+                'code': 403,
+            }, status=403)
 
-        # 通过course获取所有学生id
-        student_list = student.objects.filter(Course=course_id)
-        counts=student_list.count()
-        # 循环
-        for i in range(int(counts)):
-            create_studentsign=studentsign.objects.create(
-                student=student_list[i],
-                sign=create_sign,
-                isSigned=False
+        else:
+            create_sign=sign.objects.create(
+                Title=title,
+                PubTime=timezone.now(),
+                EndTime=endtime,
+                Course=c
             )
 
-        return Response({
-            'info': 'success',
-            'code': 200,
-            'data': SignSer(create_sign).data
-        }, status=200)
+            # 通过course获取所有学生id
+            student_list = student.objects.filter(Course=course_id)
+            counts=student_list.count()
+            # 循环
+            for i in range(int(counts)):
+                create_studentsign=studentsign.objects.create(
+                    student=student_list[i],
+                    sign=create_sign,
+                    isSigned=False
+                )
+
+            return Response({
+                'info': 'success',
+                'code': 200,
+                'data': SignSer(create_sign).data
+            }, status=200)
 
 
 # 删除签到 √

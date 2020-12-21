@@ -12,7 +12,6 @@ class teacher_course(APIView):
         if isinstance(tea_id, Response):
             return tea_id
 
-
         course_list = teacher.objects.get(pk=tea_id).teacher_courses.all().order_by('CourseNo')
 
         return Response({
