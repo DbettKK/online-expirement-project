@@ -41,7 +41,14 @@ class add_course(APIView):
             }, status=403)
 
         else:
-            tea=teacher.objects.get(TeacherNo=teacher_no)
+            try:
+                tea=teacher.objects.get(TeacherNo=teacher_no)
+            except:
+                return Response({
+                    'info': '该教师不存在',
+                    'code': 403,
+                }, status=403)
+
             create_course = course.objects.create(
                 CourseNo=course_no,
                 CourseName=course_name,
@@ -67,13 +74,20 @@ class modify_course(APIView):
         if isinstance(ma_id, Response):
             return ma_id
 
-
         update_course = course.objects.get(pk=course_id)
+
+        try:
+            tea = teacher.objects.get(TeacherNo=new_teacher_no)
+        except:
+            return Response({
+                'info': '该教师不存在',
+                'code': 403,
+            }, status=403)
+
+        update_course.TeacherNo = new_teacher_no
         update_course.CourseNo = new_course_no
         update_course.CourseName = new_course_name
-        update_course.TeacherNo = new_teacher_no
         update_course.save()
-
 
         return Response({
             'info': 'success',

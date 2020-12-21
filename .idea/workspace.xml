@@ -5,15 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job/View/manager_course.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_course.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_homepage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_student.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_student.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/manager_teacher.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/manager_teacher.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/stu_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_homepage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/stu_homework.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_homework.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/stu_sign.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/stu_sign.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job/View/tea_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_homepage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/tea_homework.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_homework.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/View/tea_sign.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/View/tea_sign.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -205,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608468091346</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="真的是最最终版了">
+      <created>1608478380440</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1608478380440</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,6 +240,7 @@
     <MESSAGE value="12.20下午" />
     <MESSAGE value="12.20晚" />
     <MESSAGE value="真的是最终版了" />
-    <option name="LAST_COMMIT_MESSAGE" value="真的是最终版了" />
+    <MESSAGE value="真的是最最终版了" />
+    <option name="LAST_COMMIT_MESSAGE" value="真的是最最终版了" />
   </component>
 </project>
